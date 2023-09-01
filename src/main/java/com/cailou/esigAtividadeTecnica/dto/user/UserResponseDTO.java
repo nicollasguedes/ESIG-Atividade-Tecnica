@@ -5,13 +5,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
+import java.math.BigInteger;
 
 @Getter
 @Setter
 @Data
 public class UserResponseDTO {
-    private UUID id;
+    private BigInteger id;
     private String login;
     private boolean active;
     private String name;

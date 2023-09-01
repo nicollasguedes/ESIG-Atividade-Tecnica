@@ -6,15 +6,16 @@ import com.cailou.esigAtividadeTecnica.dto.user.UserRequestDTO;
 import com.cailou.esigAtividadeTecnica.model.UserModel;
 
 import javax.transaction.Transactional;
+import java.math.BigInteger;
 
 public interface UserService {
 
     UserModel saveUser(UserRequestDTO userRequest);
 
     @Transactional
-    UserModel updateUserPassword(String userId, PasswordRequestDTO passwordRequest);
+    UserModel updateUserPassword(BigInteger userId, PasswordRequestDTO passwordRequest);
 
-    UserModel listUser(String userId);
+    UserModel listUser(BigInteger userId);
 
-    UserModel switchUserActivity(String userId);
+    UserModel switchUserActivity(BigInteger userId);
 }

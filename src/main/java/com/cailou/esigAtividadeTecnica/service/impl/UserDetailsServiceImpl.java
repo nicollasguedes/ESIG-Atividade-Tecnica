@@ -1,16 +1,16 @@
 package com.cailou.esigAtividadeTecnica.service.impl;
 
-import com.cailou.esigAtividadeTecnica.repository.UserRepository;
 import com.cailou.esigAtividadeTecnica.detail.UserDetailData;
 import com.cailou.esigAtividadeTecnica.model.UserModel;
+import com.cailou.esigAtividadeTecnica.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service()
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return UserDetailData.creat(user.get());
     }
 
-    public UserDetails loadUserById(UUID id) throws UsernameNotFoundException {
+    public UserDetails loadUserById(BigInteger id) throws UsernameNotFoundException {
         Optional<UserModel> user = this.userRepository.findById(id);
         if(user.isEmpty()) {
             throw new RuntimeException("Email ou Senha invalidos!");

@@ -18,9 +18,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
@@ -52,7 +52,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         DecodedJWT decodedJWT = verifier.verify(token);
         String userId = decodedJWT.getSubject();
 
-        UserDetails userDetails = userDetaislService.loadUserById(UUID.fromString(userId));
+        UserDetails userDetails = userDetaislService.loadUserById(new BigInteger(userId));
 
         if (userId.isEmpty()) {
             throw new RuntimeException("Ex");

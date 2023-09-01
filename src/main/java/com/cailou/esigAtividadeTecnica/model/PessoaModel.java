@@ -7,8 +7,8 @@ import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.UUID;
+import java.math.BigInteger;
+import java.util.Calendar;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +21,8 @@ public class PessoaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Type(type = "uuid-char")
-    private UUID id;
+    @Column(nullable = false, name = "ID", columnDefinition = "BIGINT")
+    private BigInteger id;
 
     @Column(nullable = false, name = "Nome")
     private String nome;
@@ -46,13 +47,12 @@ public class PessoaModel {
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false, name = "Data_Nascimento")
-    private Date dataNascimento;
+    private Calendar dataNascimento;
 
     @Column(nullable = false, name = "Cargo_ID")
     private String cargoId;
 
-    @OneToOne
-    @JoinColumn(nullable = false, name = "Usuario", referencedColumnName = "login")
-    private UserModel login;
+    @Column(name = "Usuario")
+    private String login;
 
 }

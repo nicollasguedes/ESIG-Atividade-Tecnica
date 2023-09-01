@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigInteger;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserModel updateUserPassword(String userId, PasswordRequestDTO passwordRequest) {
+    public UserModel updateUserPassword(BigInteger userId, PasswordRequestDTO passwordRequest) {
         var user = listUser(userId);
 
         if (!passwordRequest.getConfirmPassword().equals(passwordRequest.getNewPassword())) {
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.save(user);
     }
 
-    public boolean checkPassword(String userId, CheckPasswordRequestDTO passwordRequest) {
+    public boolean checkPassword(BigInteger userId, CheckPasswordRequestDTO passwordRequest) {
         var user = listUser(userId);
 
         if (!this.passwordEncoder.matches(passwordRequest.getOldPassword(), user.getPassword())) {
@@ -70,8 +70,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel listUser(String userId) {
-        Optional<UserModel> user = this.userRepository.findById(UUID.fromString(userId));
+    public UserModel listUser(BigInteger userId) {
+        Optional<UserModel> user = this.userRepository.findById(userId);
         if (user.isEmpty()) {
             throw new RuntimeException("Usuário não encontrado!");
         }
@@ -79,8 +79,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel switchUserActivity(String userId) {
-        var userAlreadyExists = this.userRepository.findById(UUID.fromString(userId));
+    public UserModel switchUserActivity(BigInteger userId) {
+        var userAlreadyExists = this.userRepository.findById(userId);
 
         if (userAlreadyExists.isEmpty()) {
             throw new RuntimeException("Usuário não encontrado!");
