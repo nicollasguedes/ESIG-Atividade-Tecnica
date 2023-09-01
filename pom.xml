@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cailou</groupId>
-    <artifactId>BasicRegisterLoginAPI</artifactId>
+    <artifactId>EsigAtividadeTecnica</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>BasicRegisterLoginAPI</name>
-    <description>BasicRegisterLoginAPI</description>
+    <name>EsigAtividadeTecnica</name>
+    <description>EsigAtividadeTecnica</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -129,11 +129,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <scope>test</scope>
@@ -148,6 +143,14 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
