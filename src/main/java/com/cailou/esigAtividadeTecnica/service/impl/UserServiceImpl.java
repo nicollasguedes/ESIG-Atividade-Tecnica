@@ -12,23 +12,26 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PessoaServiceImpl pessoaService;
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PessoaServiceImpl pessoaService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.pessoaService = pessoaService;
         this.passwordEncoder = passwordEncoder;
     }
 
-
+    @Transactional
     @Override
-    public UserModel saveUser(UserRequestDTO userRequest) {
+    public UserModel saveUser(UserRequestDTO userRequest) throws ParseException {
         Optional<UserModel> userAlreadyExists = this.userRepository.findByLogin(userRequest.getLogin());
         if (userAlreadyExists.isPresent()) {
             throw new RuntimeException("Login já existe, tente outro");
@@ -38,6 +41,8 @@ public class UserServiceImpl implements UserService {
         userModel.setPassword(this.passwordEncoder.encode(userRequest.getPassword()));
         userModel.setLogin(userRequest.getLogin());
         userModel.setActive(userRequest.isActive());
+
+        pessoaService.savePessoaByLogin(userRequest.getPessoaRequestDTO(), userRequest.getLogin());
 
         return this.userRepository.save(userModel);
     }
@@ -59,6 +64,15 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.save(user);
     }
 
+    @Override
+    @Transactional
+    public Boolean deleteUser(BigInteger userId) {
+        var user = listUser(userId);
+        if (pessoaService.deletePessoaByLogin(user.getLogin())){
+            return userRepository.deleteByIdAndReturnBool(user.getId());
+        }else return false;
+    }
+
     public boolean checkPassword(BigInteger userId, CheckPasswordRequestDTO passwordRequest) {
         var user = listUser(userId);
 
@@ -78,15 +92,11 @@ public class UserServiceImpl implements UserService {
         return user.get();
     }
 
+    @Transactional
     @Override
-    public UserModel switchUserActivity(BigInteger userId) {
-        var userAlreadyExists = this.userRepository.findById(userId);
+    public UserModel switchUserActive(BigInteger userId) {
+        UserModel user = listUser(userId);
 
-        if (userAlreadyExists.isEmpty()) {
-            throw new RuntimeException("Usuário não encontrado!");
-        }
-
-        var user = userAlreadyExists.get();
         user.setActive(!user.isActive());
         this.userRepository.save(user);
         return user;

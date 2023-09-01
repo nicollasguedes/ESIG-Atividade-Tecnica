@@ -3,7 +3,8 @@ package com.cailou.esigAtividadeTecnica.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -19,8 +20,7 @@ import java.util.Calendar;
 public class PessoaModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "uuid-char")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "ID", columnDefinition = "BIGINT")
     private BigInteger id;
 
@@ -31,7 +31,7 @@ public class PessoaModel {
     private String email;
 
     @Column(nullable = false, name = "CEP")
-    private String CEP;
+    private String cep;
 
     @Column(nullable = false, name = "Pais")
     private String pais;
@@ -49,10 +49,15 @@ public class PessoaModel {
     @Column(nullable = false, name = "Data_Nascimento")
     private Calendar dataNascimento;
 
-    @Column(nullable = false, name = "Cargo_ID")
-    private String cargoId;
+    @Column(nullable = false, name = "Cargo_ID", columnDefinition = "INT")
+    private int cargoId;
 
     @Column(name = "Usuario")
     private String login;
+
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private PessoaSalarioModel pessoaSalario = null;
+
 
 }

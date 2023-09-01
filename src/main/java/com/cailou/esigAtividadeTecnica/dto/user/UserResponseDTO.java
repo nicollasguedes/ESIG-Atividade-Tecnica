@@ -1,5 +1,6 @@
 package com.cailou.esigAtividadeTecnica.dto.user;
 
+import com.cailou.esigAtividadeTecnica.dto.pessoa.PessoaResponseDTO;
 import com.cailou.esigAtividadeTecnica.model.UserModel;
 import lombok.Data;
 import lombok.Getter;
@@ -14,7 +15,7 @@ public class UserResponseDTO {
     private BigInteger id;
     private String login;
     private boolean active;
-    private String name;
+    private PessoaResponseDTO pessoa = null;
 
     public static UserResponseDTO convertToDto(UserModel user) {
         var userResponseDTO = new UserResponseDTO();

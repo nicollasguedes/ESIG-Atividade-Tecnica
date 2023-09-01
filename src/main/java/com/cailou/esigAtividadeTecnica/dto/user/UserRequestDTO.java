@@ -1,5 +1,6 @@
 package com.cailou.esigAtividadeTecnica.dto.user;
 
+import com.cailou.esigAtividadeTecnica.dto.pessoa.PessoaRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +19,10 @@ public class UserRequestDTO {
     @NotBlank(message = "O campo senha não pode ser vazio!")
     private String password;
 
-    @NotBlank(message = "O campo nome não pode ser vazio!")
-    private String name;
-
     @NotNull(message = "O campo active não pode ser vazio!")
     private boolean active;
 
-    private String roleId;
+    @NotNull(message = "O campo active não pode ser vazio!")
+    private PessoaRequestDTO pessoaRequestDTO;
+
 }
