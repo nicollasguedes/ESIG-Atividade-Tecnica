@@ -82,9 +82,13 @@ public class PessoaServiceImpl implements PessoaService {
         pessoaModel.setDataNascimento(calendar);
         pessoaModel.setCargoId(pessoaRequest.getCargoId());
 
-        if (pessoaRequest.getPessoaSalarioRequest() != null) {
-            var salario = pessoaSalarioService.savePessoaSalarioByPessoaModel(
-                    pessoaModel, pessoaRequest.getPessoaSalarioRequest());
+        if (pessoaRequest.getPessoaSalarioRequest() != null && pessoaModel.getPessoaSalario() != null) {
+            var salario = pessoaSalarioService.updatePessoaSalarioByPessoaId(
+                    pessoaModel.getId(), pessoaRequest.getPessoaSalarioRequest());
+            pessoaModel.setPessoaSalario(salario);
+        } else if (pessoaRequest.getPessoaSalarioRequest() != null) {
+            var salario = pessoaSalarioService.savePessoaSalarioByPessoaId(
+                    pessoaModel.getId(), pessoaRequest.getPessoaSalarioRequest());
             pessoaModel.setPessoaSalario(salario);
         }
 
@@ -95,7 +99,7 @@ public class PessoaServiceImpl implements PessoaService {
     @Transactional
     public Boolean deletePessoaByLogin(String login) {
         var pessoaFound = listPessoaByLogin(login);
-        if (pessoaFound.getPessoaSalario() != null){
+        if (pessoaFound.getPessoaSalario() != null) {
             pessoaSalarioService.deletePessoaSalarioByPessoaId(pessoaFound.getId());
         }
         return pessoaRepository.deleteByIdAndReturnBool(pessoaFound.getId());
@@ -116,6 +120,7 @@ public class PessoaServiceImpl implements PessoaService {
         }
         return pessoa.get();
     }
+
     @Override
     public List<PessoaModel> listPessoas() {
         pessoaList = pessoaRepository.findAll();

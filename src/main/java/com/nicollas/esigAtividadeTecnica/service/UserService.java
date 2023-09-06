@@ -22,5 +22,7 @@ public interface UserService {
 
     UserModel listUser(BigInteger userId);
 
+    UserModel listUser(String login);
+
     UserModel switchUserActive(BigInteger userId);
 }

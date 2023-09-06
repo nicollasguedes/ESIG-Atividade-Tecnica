@@ -5,6 +5,7 @@ import com.nicollas.esigAtividadeTecnica.dto.pessoa.PessoaRequestDTO;
 import com.nicollas.esigAtividadeTecnica.dto.pessoa.PessoaResponseDTO;
 import com.nicollas.esigAtividadeTecnica.model.PessoaModel;
 import com.nicollas.esigAtividadeTecnica.service.impl.PessoaServiceImpl;
+import com.nicollas.esigAtividadeTecnica.service.impl.UserServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,13 @@ import java.text.ParseException;
 @RequestMapping("/pessoa")
 public class PessoaController {
     private final PessoaServiceImpl pessoaService;
+    private final UserServiceImpl userService;
 
 
     @Autowired
-    public PessoaController(PessoaServiceImpl pessoaService) {
+    public PessoaController(PessoaServiceImpl pessoaService, UserServiceImpl userService) {
         this.pessoaService = pessoaService;
+        this.userService = userService;
     }
 
     @ApiOperation("save pessoa data using a login.")
@@ -31,7 +34,9 @@ public class PessoaController {
     public ResponseEntity<PessoaResponseDTO> savePessoaByLogin(
             @PathVariable String login, @RequestBody PessoaRequestDTO pessoaRequestDTO
     ) throws ParseException {
-        PessoaModel pessoa = this.pessoaService.savePessoaByLogin(pessoaRequestDTO, login);
+        var user = userService.listUser(login);
+        PessoaModel pessoa = this.pessoaService.savePessoaByLogin(pessoaRequestDTO, user.getLogin());
+
         return ResponseEntity.status(HttpStatus.OK).body(PessoaResponseDTO.convertToDto(pessoa));
     }
 

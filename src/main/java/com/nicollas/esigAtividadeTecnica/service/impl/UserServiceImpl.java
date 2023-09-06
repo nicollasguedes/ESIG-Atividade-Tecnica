@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
     public UserModel updateUserPassword(BigInteger userId, PasswordRequestDTO passwordRequest) {
         var user = listUser(userId);
 
-        if (!passwordRequest.getConfirmPassword().equals(passwordRequest.getNewPassword())) {
-            throw new RuntimeException("Senha invalida, a nova senha e a confirmação não são iguais");
+        if (passwordRequest.getConfirmPassword().equals(passwordRequest.getNewPassword())) {
+            throw new RuntimeException("Senha invalida, a nova senha e a confirmação não podem ser iguais");
         }
         if (this.passwordEncoder.matches(passwordRequest.getNewPassword(), user.getPassword())) {
             throw new RuntimeException("Senha invalida, nova senha não pode ser igual a antiga");
@@ -68,9 +68,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Boolean deleteUser(BigInteger userId) {
         var user = listUser(userId);
-        if (pessoaService.deletePessoaByLogin(user.getLogin())){
+        if (pessoaService.deletePessoaByLogin(user.getLogin())) {
             return userRepository.deleteByIdAndReturnBool(user.getId());
-        }else return false;
+        } else return false;
     }
 
     public boolean checkPassword(BigInteger userId, CheckPasswordRequestDTO passwordRequest) {
@@ -86,6 +86,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel listUser(BigInteger userId) {
         Optional<UserModel> user = this.userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new RuntimeException("Usuário não encontrado!");
+        }
+        return user.get();
+    }
+
+    @Override
+    public UserModel listUser(String login) {
+        Optional<UserModel> user = this.userRepository.findByLogin(login);
         if (user.isEmpty()) {
             throw new RuntimeException("Usuário não encontrado!");
         }
