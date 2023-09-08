@@ -56,6 +56,8 @@ public class PessoaServiceImpl implements PessoaService {
         calendar.setTime(simpleDateFormat.parse(pessoaRequest.getDataNascimento()));
         pessoaModel.setDataNascimento(calendar);
 
+        pessoaModel = this.pessoaRepository.save(pessoaModel);
+
         if (pessoaRequest.getPessoaSalarioRequest() != null) {
             var salario = pessoaSalarioService.savePessoaSalarioByPessoaModel(
                     pessoaModel, pessoaRequest.getPessoaSalarioRequest());
