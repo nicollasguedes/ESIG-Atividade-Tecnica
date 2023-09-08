@@ -31,7 +31,7 @@ API REST com Controllers contendo o CRUD de: Usuario, Pessoa, Salario de uma pes
 O que podia ser melhorado:
 * Encapsulamento do endereço de pessoa e seus respectivos atributos (EnderecoModel).
 * Encapsulamento do contato e seus respectivos atributos (ContatoModel)
-* Adicionar Relação One To One de UsuarioModel para PessoaModel (ContatoModel)
+* Adicionar Relação One To One de UsuarioModel para PessoaModel (UserModel)
 * Melhorar configuração das views para aplicação monolítica
   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
