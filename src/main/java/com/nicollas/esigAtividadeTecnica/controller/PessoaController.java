@@ -29,13 +29,13 @@ public class PessoaController {
         this.userService = userService;
     }
 
-    @ApiOperation("save pessoa data using a login.")
-    @PostMapping("save/{login}")
-    public ResponseEntity<PessoaResponseDTO> savePessoaByLogin(
-            @PathVariable String login, @RequestBody PessoaRequestDTO pessoaRequestDTO
+    @ApiOperation("save pessoa data using a userId.")
+    @PostMapping("save/{userId}")
+    public ResponseEntity<PessoaResponseDTO> savePessoaByUserId(
+            @PathVariable String userId, @RequestBody PessoaRequestDTO pessoaRequestDTO
     ) throws ParseException {
-        var user = userService.listUser(login);
-        PessoaModel pessoa = this.pessoaService.savePessoaByLogin(pessoaRequestDTO, user.getLogin());
+        var user = userService.listUser(userId);
+        PessoaModel pessoa = this.pessoaService.savePessoaByUser(pessoaRequestDTO, user);
 
         return ResponseEntity.status(HttpStatus.OK).body(PessoaResponseDTO.convertToDto(pessoa));
     }

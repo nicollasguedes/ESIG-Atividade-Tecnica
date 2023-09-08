@@ -1,12 +1,15 @@
 package com.nicollas.esigAtividadeTecnica.repository;
 
-import com.nicollas.esigAtividadeTecnica.model.PessoaModel;
+import com.nicollas.esigAtividadeTecnica.model.EnderecoModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.util.Optional;
 
-public interface PessoaRepository extends JpaRepository<PessoaModel, BigInteger> {
+public interface EnderecoRepository extends JpaRepository<EnderecoModel, BigInteger> {
+
+    Optional<EnderecoModel> findByPessoaId(BigInteger pessoa_id);
 
     @Transactional
     default Boolean deleteByIdAndReturnBool(BigInteger id) {

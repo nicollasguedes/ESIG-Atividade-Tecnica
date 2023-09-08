@@ -42,7 +42,10 @@ public class UserServiceImpl implements UserService {
         userModel.setLogin(userRequest.getLogin());
         userModel.setActive(userRequest.isActive());
 
-        pessoaService.savePessoaByLogin(userRequest.getPessoaRequestDTO(), userRequest.getLogin());
+        userModel = this.userRepository.save(userModel);
+
+        userModel.setPessoa(pessoaService
+                .savePessoaByUserModel(userModel ,userRequest.getPessoaRequestDTO()));
 
         return this.userRepository.save(userModel);
     }
@@ -68,7 +71,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Boolean deleteUser(BigInteger userId) {
         var user = listUser(userId);
-        if (pessoaService.deletePessoaByLogin(user.getLogin())) {
+        if (pessoaService.deletePessoaByPessoaId(user.getPessoa().getId())) {
             return userRepository.deleteByIdAndReturnBool(user.getId());
         } else return false;
     }

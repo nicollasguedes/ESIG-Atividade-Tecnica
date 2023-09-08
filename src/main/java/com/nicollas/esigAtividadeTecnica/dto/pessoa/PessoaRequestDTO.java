@@ -1,5 +1,7 @@
 package com.nicollas.esigAtividadeTecnica.dto.pessoa;
 
+import com.nicollas.esigAtividadeTecnica.dto.contato.ContatoRequestDTO;
+import com.nicollas.esigAtividadeTecnica.dto.endereco.EnderecoRequestDTO;
 import com.nicollas.esigAtividadeTecnica.dto.pessoaSalario.PessoaSalarioRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,29 +18,17 @@ public class PessoaRequestDTO {
     @NotBlank(message = "O campo nome não pode ser vazio!")
     private String nome;
 
-    @NotBlank(message = "O campo nome não pode ser vazio!")
-    private String email;
-
-    @NotBlank(message = "O campo cep não pode ser vazio!")
-    private String cep;
-
-    @NotBlank(message = "O campo país não pode ser vazio!")
-    private String pais;
-
-    @NotBlank(message = "O campo Cidade não pode ser vazio!")
-    private String cidade;
-
-    @NotBlank(message = "O campo Endereço não pode ser vazio!")
-    private String endereco;
-
-    @NotBlank(message = "O campo telefone não pode ser vazio!")
-    private String telefone;
-
     @NotNull(message = "O campo Data de Nascimento não pode ser vazio! M/dd/yyyy")
     private String dataNascimento;
 
     @NotNull(message = "O campo CargoId não pode ser vazio!")
     private int cargoId;
+
+    @NotNull(message = "O campo endereco não pode ser vazio!")
+    private EnderecoRequestDTO enderecoRequest;
+
+    @NotNull(message = "O campo contato não pode ser vazio!")
+    private ContatoRequestDTO contatoRequest;
 
     private PessoaSalarioRequestDTO pessoaSalarioRequest = null;
 }

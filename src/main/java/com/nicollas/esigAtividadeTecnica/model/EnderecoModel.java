@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Data
@@ -14,19 +13,25 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "pessoa_salario")
-public class PessoaSalarioModel {
+@Table(name = "endereco")
+public class EnderecoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "id", columnDefinition = "BIGINT")
+    @Column(nullable = false, name = "ID", columnDefinition = "BIGINT")
     private BigInteger id;
 
-    @Column(nullable = false, name = "nome")
-    private String nome;
+    @Column(nullable = false, name = "CEP")
+    private String cep;
 
-    @Column(nullable = false, name = "salario")
-    private BigDecimal salario;
+    @Column(nullable = false, name = "Pais")
+    private String pais;
+
+    @Column(nullable = false, name = "Cidade")
+    private String cidade;
+
+    @Column(nullable = false, name = "endereco")
+    private String endereco;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "pessoa_id", referencedColumnName = "id")

@@ -3,6 +3,8 @@ package com.nicollas.esigAtividadeTecnica.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -44,4 +46,8 @@ public class UserModel {
     @Column(name = "last_login_at")
     @LastModifiedDate
     private Calendar lastLoginDate;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private PessoaModel pessoa = null;
 }

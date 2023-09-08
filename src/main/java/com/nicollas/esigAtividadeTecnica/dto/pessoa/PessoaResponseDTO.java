@@ -1,5 +1,7 @@
 package com.nicollas.esigAtividadeTecnica.dto.pessoa;
 
+import com.nicollas.esigAtividadeTecnica.dto.contato.ContatoResponseDTO;
+import com.nicollas.esigAtividadeTecnica.dto.endereco.EnderecoResponseDTO;
 import com.nicollas.esigAtividadeTecnica.dto.pessoaSalario.PessoaSalarioResponseDTO;
 import com.nicollas.esigAtividadeTecnica.model.PessoaModel;
 import lombok.Data;
@@ -15,35 +17,32 @@ import java.text.SimpleDateFormat;
 public class PessoaResponseDTO {
     private BigInteger id;
     private String nome;
-    private String email;
-    private String cep;
-    private String pais;
-    private String cidade;
-    private String endereco;
-    private String telefone;
-    private String login;
     private String dataNascimento;
     private int cargoId;
     private PessoaSalarioResponseDTO pessoaSalario = null;
+    private EnderecoResponseDTO endereco = null;
+    private ContatoResponseDTO contatoResponseDTO = null;
 
     public static PessoaResponseDTO convertToDto(PessoaModel pessoa) {
         var pessoaResponseDTO = new PessoaResponseDTO();
 
         pessoaResponseDTO.setId(pessoa.getId());
         pessoaResponseDTO.setNome(pessoa.getNome());
-        pessoaResponseDTO.setEmail(pessoa.getEmail());
-        pessoaResponseDTO.setCep(pessoa.getCep());
-        pessoaResponseDTO.setPais(pessoa.getPais());
-        pessoaResponseDTO.setCidade(pessoa.getCidade());
-        pessoaResponseDTO.setEndereco(pessoa.getEndereco());
-        pessoaResponseDTO.setTelefone(pessoa.getTelefone());
-        pessoaResponseDTO.setTelefone(pessoa.getTelefone());
-        pessoaResponseDTO.setLogin(pessoa.getLogin());
         pessoaResponseDTO.setCargoId(pessoa.getCargoId());
 
         if (pessoa.getPessoaSalario() != null) {
             pessoaResponseDTO.setPessoaSalario(
                     PessoaSalarioResponseDTO.convertToDto(pessoa.getPessoaSalario()));
+        }
+
+        if (pessoa.getEndereco() != null) {
+            pessoaResponseDTO.setEndereco(
+                    EnderecoResponseDTO.convertToDto(pessoa.getEndereco()));
+        }
+
+        if (pessoa.getContato() != null) {
+            pessoaResponseDTO.setContatoResponseDTO(
+                    ContatoResponseDTO.convertToDto(pessoa.getContato()));
         }
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("M/dd/yyyy");

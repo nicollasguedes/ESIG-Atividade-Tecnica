@@ -24,6 +24,11 @@ public class UserResponseDTO {
         userResponseDTO.setLogin(user.getLogin());
         userResponseDTO.setActive(user.isActive());
 
+        if (user.getPessoa() != null) {
+            userResponseDTO.setPessoa(
+                    PessoaResponseDTO.convertToDto(user.getPessoa()));
+        }
+
         return userResponseDTO;
     }
 }
