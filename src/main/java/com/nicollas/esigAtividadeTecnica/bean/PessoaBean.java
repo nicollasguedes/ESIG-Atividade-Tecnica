@@ -1,4 +1,4 @@
-package com.nicollas.esigAtividadeTecnica.bean;
+/*package com.nicollas.esigAtividadeTecnica.bean;
 
 import com.nicollas.esigAtividadeTecnica.model.PessoaModel;
 import com.nicollas.esigAtividadeTecnica.repository.PessoaRepository;
@@ -31,4 +31,4 @@ public class PessoaBean implements Serializable {
     public void init() {
         pessoaList = pessoaRepository.findAll();
     }
-}
+}*/

@@ -24,6 +24,8 @@ public class EnderecoResponseDTO {
         enderecoResponseDTO.setId(contato.getId());
         enderecoResponseDTO.setCep(contato.getCep());
         enderecoResponseDTO.setEndereco(contato.getEndereco());
+        enderecoResponseDTO.setPais(contato.getPais());
+        enderecoResponseDTO.setCidade(contato.getCidade());
         enderecoResponseDTO.setPessoaId(contato.getPessoa().getId());
 
         return enderecoResponseDTO;
