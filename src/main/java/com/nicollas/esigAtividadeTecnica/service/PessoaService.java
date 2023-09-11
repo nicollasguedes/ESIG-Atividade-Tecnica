@@ -25,6 +25,8 @@ public interface PessoaService {
 
     PessoaModel listPessoa(BigInteger pessoaId);
 
+    List<PessoaModel> getPessoaList();
+
     List<PessoaModel> listPessoas();
 
     PessoaModel listPessoaByLogin(String login);

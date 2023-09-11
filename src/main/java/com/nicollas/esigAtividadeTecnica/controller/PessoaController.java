@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController()
@@ -58,6 +60,18 @@ public class PessoaController {
         PessoaModel pessoa = this.pessoaService.listPessoa(pessoaId);
         return ResponseEntity.status(HttpStatus.OK).body(PessoaResponseDTO.convertToDto(pessoa));
     }
+
+    @ApiOperation("get pessoa list")
+    @GetMapping("/get-all")
+    public ResponseEntity<List<PessoaResponseDTO>> getPessoaList() {
+        var pessoaList = this.pessoaService.getPessoaList();
+        List<PessoaResponseDTO> responseList = new ArrayList<>();
+        for (PessoaModel pessoa : pessoaList) {
+            responseList.add(PessoaResponseDTO.convertToDto(pessoa));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(responseList);
+    }
+
 
     @ApiOperation("delete pessoa by Id.")
     @DeleteMapping("/delete/{pessoaId}")

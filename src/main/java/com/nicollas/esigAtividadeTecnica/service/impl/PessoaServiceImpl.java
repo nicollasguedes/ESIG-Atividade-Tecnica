@@ -122,6 +122,11 @@ public class PessoaServiceImpl implements PessoaService {
         }
         return pessoa.get();
     }
+    @Override
+    public List<PessoaModel> getPessoaList() {
+
+        return pessoaRepository.findAll();
+    }
 
     @Override
     public List<PessoaModel> listPessoas() {
